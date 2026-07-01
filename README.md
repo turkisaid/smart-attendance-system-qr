@@ -86,13 +86,17 @@ smart-attendance-system-qr
 
 ## 📷 Screenshots
 
-Screenshots will be added soon.
+| Login | Student Dashboard |
+|--------|-------------------|
+| ![](screenshots/login.png) | ![](screenshots/student-dashboard.png) |
 
-- Login Page
-- Student Dashboard
-- Teacher Dashboard
-- Admin Dashboard
-- QR Scanner
+| Teacher Dashboard | Admin Dashboard |
+|--------|-------------------|
+| ![](screenshots/teacher-dashboard.png) | ![](screenshots/admin-dashboard.png) |
+
+| QR Scanner | Attendance History |
+|--------|-------------------|
+| ![](screenshots/qr-scanner.png) | ![](screenshots/attendance-history.png) |
 
 ---
 
