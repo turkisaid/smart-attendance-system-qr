@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | UTAS–Sohar</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img src="../assets/images/attendance_logo.png.png" alt="Attendance Logo" style="height:45px;width:auto;object-fit:contain;display:block;" />
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>UTAS–Sohar Attendance</span>
+    </div>
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <div class="navbar-avatar" id="navUserAvatar">AR</div>
+        <div>
+          <div id="navUserName" style="font-weight:600;line-height:1.3;">Ali Al-Rashidi</div>
+          <div style="font-size:.72rem;opacity:.6;line-height:1.2;">Student</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main-content">
+
+    <!-- Profile header row -->
+    <div class="student-profile-header">
+      <div class="profile-avatar-lg" id="studentAvatarLg">AR</div>
+      <div>
+        <h1 class="profile-name" id="studentNameLg">Ali Al-Rashidi</h1>
+        <p class="profile-meta" id="studentInfoLg">
+          STU-001 &nbsp;·&nbsp; B.Sc. Computer Science &nbsp;·&nbsp; Semester 5
+        </p>
+      </div>
+    </div>
+
+    <!-- Attendance warning alert (shown only when a course is below 75%) -->
+    <div class="alert alert-warning" id="attendanceAlert" style="display:none;">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span id="attendanceAlertMsg"></span>
+    </div>
+
+    <!-- ===== STATS ROW ===== -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-book-open"></i></div>
+        <div>
+          <div class="stat-value" id="sStatCourses">0</div>
+          <div class="stat-label">Enrolled Courses</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+          <div class="stat-value" id="sStatPresent">0</div>
+          <div class="stat-label">Total Present</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon red"><i class="fa-solid fa-circle-xmark"></i></div>
+        <div>
+          <div class="stat-value" id="sStatAbsent">0</div>
+          <div class="stat-label">Total Absent</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon yellow"><i class="fa-solid fa-chart-pie"></i></div>
+        <div>
+          <div class="stat-value" id="sStatRate">0%</div>
+          <div class="stat-label">Overall Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TWO-COLUMN LAYOUT ===== -->
+    <div class="student-layout">
+
+      <!-- ---- Left: Attendance breakdown + history ---- -->
+      <div class="student-main">
+
+        <!-- Course attendance cards -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="section-header" style="padding-bottom:0;">
+            <div>
+              <h3 class="section-title">Attendance by Course</h3>
+              <p class="section-desc">Your attendance rate for each enrolled course. Minimum required: 75%.</p>
+            </div>
+          </div>
+          <div class="course-attendance-grid" id="courseAttendanceGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Recent attendance history table -->
+        <div class="card">
+          <div class="section-header" style="padding-bottom:0;">
+            <div>
+              <h3 class="section-title">Recent Attendance History</h3>
+              <p class="section-desc">Your last 10 attendance records across all courses.</p>
+            </div>
+          </div>
+          <div class="table-wrapper" style="margin-top:16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Course</th>
+                  <th>Status</th>
+                  <th>Check-in Time</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /student-main -->
+
+      <!-- ---- Right: QR Generator ---- -->
+      <aside class="student-qr-panel">
+
+        <!-- QR Generator card -->
+        <div class="card qr-card">
+
+          <div class="qr-card-header">
+            <i class="fa-solid fa-qrcode"></i>
+            <h3>Check-in QR Code</h3>
+          </div>
+
+          <!-- Course selector -->
+          <div class="qr-course-select">
+            <label for="qrCourseSelect">Select Course</label>
+            <select id="qrCourseSelect">
+              <option value="">— Choose a course —</option>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <!-- Idle state -->
+          <div id="qrIdleState" class="qr-idle-state">
+            <div class="qr-idle-icon">
+              <i class="fa-solid fa-qrcode"></i>
+            </div>
+            <p>Generate a dynamic QR code to check in to your class.</p>
+            <p class="qr-note">
+              <i class="fa-solid fa-clock"></i> Each code is valid for <strong>2 minutes</strong> only
+            </p>
+          </div>
+
+          <!-- Active state (shown after first generation; expired overlay injected by qr.js) -->
+          <div id="qrActiveState" class="qr-active-state" style="display:none;">
+            <div class="qr-code-wrap">
+              <div id="qr-container"></div>
+            </div>
+
+            <!-- Token / status label -->
+            <div class="qr-token-label" id="qr-status">Token: —</div>
+
+            <!-- Countdown -->
+            <div class="qr-timer-wrap">
+              <div class="qr-timer" id="qr-timer">02:00</div>
+              <div class="qr-timer-bar">
+                <div class="qr-timer-fill" id="qr-timer-fill"></div>
+              </div>
+              <p class="qr-timer-note" id="qrTimerNote">Scan before time runs out</p>
+            </div>
+          </div>
+
+          <!-- Action button (disabled until a course is chosen) -->
+          <div class="qr-actions">
+            <button class="btn btn-primary" id="btn-gen" style="width:100%;" disabled>
+              <i class="fa-solid fa-qrcode"></i> Generate QR Code
+            </button>
+          </div>
+
+        </div><!-- /qr-card -->
+
+        <!-- How-it-works info card -->
+        <div class="card qr-info-card">
+          <div class="qr-info-item">
+            <div class="qr-info-icon">
+              <i class="fa-solid fa-camera"></i>
+            </div>
+            <div>
+              <strong>Raspberry Pi Camera</strong>
+              <p>The classroom camera scans your QR to record attendance automatically.</p>
+            </div>
+          </div>
+          <div class="qr-info-item">
+            <div class="qr-info-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <strong>Secure &amp; Time-Limited</strong>
+              <p>Each QR contains a unique token that expires after 2 minutes to prevent sharing.</p>
+            </div>
+          </div>
+        </div>
+
+      </aside><!-- /student-qr-panel -->
+
+    </div><!-- /student-layout -->
+  </div><!-- /main-content -->
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- QRCode.js library (only needed on this page) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="../js/qr.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | UTAS–Sohar</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img src="../assets/images/attendance_logo.png.png" alt="Attendance Logo" style="height:45px;width:auto;object-fit:contain;display:block;" />
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>UTAS–Sohar Attendance</span>
+    </div>
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <div class="navbar-avatar" id="navUserAvatar">AF</div>
+        <div>
+          <div id="navUserName" style="font-weight:600;line-height:1.3;">Ahmed Al-Farsi</div>
+          <div style="font-size:.72rem;opacity:.6;line-height:1.2;">Administrator</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main-content">
+
+    <!-- Page header -->
+    <div class="page-header">
+      <h1>
+        <i class="fa-solid fa-user-shield" style="color:var(--accent);margin-right:10px;font-size:1.3rem;"></i>
+        Admin Dashboard
+      </h1>
+      <p>Manage all students, teachers, and courses in the system.</p>
+    </div>
+
+    <!-- ===== STATS ROW ===== -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-user-graduate"></i></div>
+        <div>
+          <div class="stat-value" id="statStudents">0</div>
+          <div class="stat-label">Total Students</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <div>
+          <div class="stat-value" id="statTeachers">0</div>
+          <div class="stat-label">Total Teachers</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon yellow"><i class="fa-solid fa-book-open"></i></div>
+        <div>
+          <div class="stat-value" id="statCourses">0</div>
+          <div class="stat-label">Total Courses</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon red"><i class="fa-solid fa-users"></i></div>
+        <div>
+          <div class="stat-value" id="statEnrollments">0</div>
+          <div class="stat-label">Total Enrollments</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TABS CARD ===== -->
+    <div class="card">
+
+      <div class="tabs-header">
+        <button class="tab-btn active" data-tab="tab-students">
+          <i class="fa-solid fa-user-graduate"></i> Manage Students
+        </button>
+        <button class="tab-btn" data-tab="tab-teachers">
+          <i class="fa-solid fa-chalkboard-user"></i> Manage Teachers
+        </button>
+        <button class="tab-btn" data-tab="tab-courses">
+          <i class="fa-solid fa-book-open"></i> Manage Courses
+        </button>
+      </div>
+
+      <!-- =================== TAB 1: STUDENTS =================== -->
+      <div class="tab-panel active" id="tab-students">
+
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Students</h3>
+            <p class="section-desc">Add, edit, or remove student accounts from the system.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="toggleAddStudent">
+            <i class="fa-solid fa-plus"></i> Add Student
+          </button>
+        </div>
+
+        <!-- Collapsible add form -->
+        <div class="add-form-panel" id="addStudentPanel" style="display:none;">
+          <div class="add-form-header">
+            <h4><i class="fa-solid fa-user-plus"></i> New Student</h4>
+            <button type="button" class="add-form-close" id="closeAddStudent" aria-label="Close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <form id="addStudentForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="sName">Full Name <span class="required">*</span></label>
+                <input type="text" id="sName" placeholder="e.g. Ali Al-Rashidi" required />
+              </div>
+              <div class="form-field">
+                <label for="sEmail">Email Address <span class="required">*</span></label>
+                <input type="email" id="sEmail" placeholder="student@utas.edu.om" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="sPassword">Password <span class="required">*</span></label>
+                <input type="password" id="sPassword" placeholder="Min. 6 characters" required />
+              </div>
+              <div class="form-field">
+                <label for="sRoll">Roll Number <span class="required">*</span></label>
+                <input type="text" id="sRoll" placeholder="e.g. STU-006" required />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="cancelAddStudent">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-floppy-disk"></i> Save Student
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table toolbar: search + record count -->
+        <div class="table-toolbar">
+          <div class="table-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="table-search-input" id="searchStudents" placeholder="Search by name, email, or roll…" />
+          </div>
+          <span class="table-count" id="studentCount"></span>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Roll Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsBody"></tbody>
+          </table>
+        </div>
+
+      </div><!-- /tab-students -->
+
+      <!-- =================== TAB 2: TEACHERS =================== -->
+      <div class="tab-panel" id="tab-teachers">
+
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Teachers</h3>
+            <p class="section-desc">Add, edit, or remove teacher accounts and their assigned subjects.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="toggleAddTeacher">
+            <i class="fa-solid fa-plus"></i> Add Teacher
+          </button>
+        </div>
+
+        <!-- Collapsible add form -->
+        <div class="add-form-panel" id="addTeacherPanel" style="display:none;">
+          <div class="add-form-header">
+            <h4><i class="fa-solid fa-user-plus"></i> New Teacher</h4>
+            <button type="button" class="add-form-close" id="closeAddTeacher" aria-label="Close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <form id="addTeacherForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="tName">Full Name <span class="required">*</span></label>
+                <input type="text" id="tName" placeholder="e.g. Dr. Omar Al-Maamari" required />
+              </div>
+              <div class="form-field">
+                <label for="tEmail">Email Address <span class="required">*</span></label>
+                <input type="email" id="tEmail" placeholder="teacher@utas.edu.om" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="tPassword">Password <span class="required">*</span></label>
+                <input type="password" id="tPassword" placeholder="Min. 6 characters" required />
+              </div>
+              <div class="form-field">
+                <label for="tEmployeeId">Employee ID <span class="required">*</span></label>
+                <input type="text" id="tEmployeeId" placeholder="e.g. EMP-104" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="tSubject">Subject <span class="required">*</span></label>
+                <input type="text" id="tSubject" placeholder="e.g. Computer Networks" required />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="cancelAddTeacher">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-floppy-disk"></i> Save Teacher
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table toolbar -->
+        <div class="table-toolbar">
+          <div class="table-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="table-search-input" id="searchTeachers" placeholder="Search by name, email, or subject…" />
+          </div>
+          <span class="table-count" id="teacherCount"></span>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Employee ID</th>
+                <th>Subject</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teachersBody"></tbody>
+          </table>
+        </div>
+
+      </div><!-- /tab-teachers -->
+
+      <!-- =================== TAB 3: COURSES =================== -->
+      <div class="tab-panel" id="tab-courses">
+
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Courses</h3>
+            <p class="section-desc">Create courses and assign them to teachers.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="toggleAddCourse">
+            <i class="fa-solid fa-plus"></i> Add Course
+          </button>
+        </div>
+
+        <!-- Collapsible add form -->
+        <div class="add-form-panel" id="addCoursePanel" style="display:none;">
+          <div class="add-form-header">
+            <h4><i class="fa-solid fa-book-medical"></i> New Course</h4>
+            <button type="button" class="add-form-close" id="closeAddCourse" aria-label="Close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <form id="addCourseForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cCode">Course Code <span class="required">*</span></label>
+                <input type="text" id="cCode" placeholder="e.g. CS-305" required />
+              </div>
+              <div class="form-field">
+                <label for="cName">Course Name <span class="required">*</span></label>
+                <input type="text" id="cName" placeholder="e.g. Artificial Intelligence" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cTeacher">Assign Teacher <span class="required">*</span></label>
+                <select id="cTeacher" required>
+                  <option value="">— Select a teacher —</option>
+                  <!-- Populated by JS from adminTeachers -->
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="cancelAddCourse">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-floppy-disk"></i> Save Course
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table toolbar -->
+        <div class="table-toolbar">
+          <div class="table-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="table-search-input" id="searchCourses" placeholder="Search by code, name, or teacher…" />
+          </div>
+          <span class="table-count" id="courseCount"></span>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Assigned Teacher</th>
+                <th>Enrolled</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="coursesBody"></tbody>
+          </table>
+        </div>
+
+      </div><!-- /tab-courses -->
+
+    </div><!-- /card -->
+  </div><!-- /main-content -->
+
+  <!-- ===== DELETE CONFIRM MODAL ===== -->
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>Confirm Delete</h3>
+        <button type="button" class="modal-close" id="closeDeleteModal" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="delete-confirm-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <p id="deleteModalMsg">Are you sure you want to delete this record? This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteModal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ENROLLMENT MODAL ===== -->
+  <div class="modal-overlay" id="enrollmentModal" role="dialog" aria-modal="true" aria-labelledby="enrollmentModalTitle">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3 id="enrollmentModalTitle">Manage Students</h3>
+          <p id="enrollmentModalSubtitle" style="font-size:.78rem;color:var(--text-secondary);margin-top:2px;font-weight:400;"></p>
+        </div>
+        <button type="button" class="modal-close" id="closeEnrollmentModal" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="enrollmentModalBody" style="padding:0;">
+        <!-- Filled by openEnrollmentModal() in main.js -->
+      </div>
+      <div class="modal-footer">
+        <span id="enrollmentSelectedCount" style="font-size:.82rem;color:var(--text-secondary);margin-right:auto;"></span>
+        <button type="button" class="btn btn-secondary" id="cancelEnrollmentModal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="saveEnrollmentBtn">
+          <i class="fa-solid fa-floppy-disk"></i> Save Enrollments
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

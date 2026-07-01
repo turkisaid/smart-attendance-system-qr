@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTAS–Sohar | Attendance System</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="login-page">
+
+  <!-- ===== LOGIN WRAPPER ===== -->
+  <div class="login-wrapper">
+
+    <!-- Left panel: branding -->
+    <div class="login-branding">
+      <div class="branding-content">
+        <div class="brand-logo">
+          <img src="assets/images/attendance_logo.png.png" alt="Attendance Logo" style="width:120px;display:block;margin:0 auto 16px;" />
+        </div>
+        <h1 class="brand-title">UTAS–Sohar</h1>
+        <p class="brand-subtitle">IoT-Based Student Attendance<br />Management System</p>
+        <ul class="brand-features">
+          <li><i class="fa-solid fa-check-circle"></i> Automated QR-code check-in</li>
+          <li><i class="fa-solid fa-check-circle"></i> Real-time attendance tracking</li>
+          <li><i class="fa-solid fa-check-circle"></i> Role-based secure access</li>
+        </ul>
+      </div>
+      <p class="brand-footer">University of Technology and Applied Sciences</p>
+    </div>
+
+    <!-- Right panel: login form -->
+    <div class="login-form-panel">
+      <div class="login-card">
+
+        <!-- Card header -->
+        <div class="login-card-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account to continue</p>
+        </div>
+
+        <!-- Role selector tabs -->
+        <div class="role-tabs" id="roleTabs">
+          <button type="button" class="role-tab active" data-role="student">
+            <i class="fa-solid fa-user-graduate"></i>
+            <span>Student</span>
+          </button>
+          <button type="button" class="role-tab" data-role="teacher">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <span>Teacher</span>
+          </button>
+          <button type="button" class="role-tab" data-role="admin">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Admin</span>
+          </button>
+        </div>
+
+        <!-- Login form -->
+        <form id="loginForm" class="login-form" novalidate>
+
+          <input type="hidden" id="selectedRole" value="student" />
+
+          <!-- Email field -->
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-envelope input-icon"></i>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@utas.edu.om"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <span class="field-error" id="emailError"></span>
+          </div>
+
+          <!-- Password field -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                <i class="fa-solid fa-eye" id="toggleIcon"></i>
+              </button>
+            </div>
+            <span class="field-error" id="passwordError"></span>
+          </div>
+
+          <!-- Remember me & forgot password row -->
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberMe" />
+              <span class="checkbox-custom"></span>
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <!-- Inline error alert -->
+          <div class="alert alert-error" id="loginAlert" style="display:none;">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="loginAlertMsg"></span>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn-login" id="loginBtn">
+            <span id="loginBtnText">Sign In</span>
+            <span id="loginSpinner" class="spinner" style="display:none;"></span>
+          </button>
+
+        </form>
+
+        <p class="login-card-footer">
+          Academic Year 2025–2026 &nbsp;|&nbsp; UTAS–Sohar
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

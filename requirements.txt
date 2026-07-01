@@ -1,0 +1,9 @@
+# UTAS-Sohar Attendance Scanner — Python dependencies
+# Install with: pip3 install -r requirements.txt
+# (Run install.sh to also handle system-level dependencies)
+
+picamera2
+pyzbar
+requests
+opencv-python
+Pillow
